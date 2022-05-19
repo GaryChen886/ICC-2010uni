@@ -1,10 +1,10 @@
 module S1(clk, rst, RB1_RW, RB1_A, RB1_D, RB1_Q, sen, sd);
 
     input clk, rst;
-    output RB1_RW;      // control signal for RB1: Read/Write
-    output reg [4:0] RB1_A; // control signal for RB1: address
-    output [7:0] RB1_D; // data path for RB1: input port
-    input [7:0] RB1_Q;  // data path for RB1: output port
+    output RB1_RW;      
+    output reg [4:0] RB1_A; 
+    output [7:0] RB1_D; 
+    input [7:0] RB1_Q;  
     output reg sen, sd;
 
     reg [1:0] currentState,nextState;
@@ -55,7 +55,6 @@ module S1(clk, rst, RB1_RW, RB1_A, RB1_D, RB1_Q, sen, sd);
         else begin
             if(currentState == RB_READ)             RB1_A <= 5'd17;
             else if(currentState == INPUT_DATA)     RB1_A <= RB1_A - 1;
-            else                                    RB1_A <= 0;
         end 
     end
     
@@ -69,7 +68,6 @@ module S1(clk, rst, RB1_RW, RB1_A, RB1_D, RB1_Q, sen, sd);
         else begin
             if(currentState == RB_READ)             counterAddrBit <= counterAddrBit - 1;
             else if(currentState == FINISH)         counterAddrBit <= 2'd2;
-            else                                    counterAddrBit <= counterAddrBit;
         end
     end
   
@@ -80,7 +78,6 @@ module S1(clk, rst, RB1_RW, RB1_A, RB1_D, RB1_Q, sen, sd);
         if(rst)                                     counterDataBit <= 3'd7;
         else begin
             if(currentState == FINISH)              counterDataBit <= counterDataBit - 1;
-            else                                    counterDataBit <= counterDataBit;
         end
     end
     
@@ -92,7 +89,6 @@ module S1(clk, rst, RB1_RW, RB1_A, RB1_D, RB1_Q, sen, sd);
         else begin
             if(currentState == FINISH)              counterPak <= counterPak + 1;
             else if(currentState == IDLE)           counterPak <= 0;
-            else                                    counterPak <= counterPak;
         end
     end
     
